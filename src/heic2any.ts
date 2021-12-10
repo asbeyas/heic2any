@@ -198,18 +198,18 @@ function decodeBuffer(buffer: ArrayBuffer): Promise<ImageData[]> {
 	return new Promise((resolve, reject) => {
 		const id = (Math.random() * new Date().getTime()).toString();
 		const message = { id, buffer };
-		((window as any).__heic2any__worker as Worker).postMessage(message);
-		((window as any).__heic2any__worker as Worker).addEventListener(
-			"message",
-			(message) => {
-				if (message.data.id === id) {
-					if (message.data.error) {
-						return reject(message.data.error);
-					}
-					return resolve(message.data.imageDataArr);
-				}
+		const worker = (window as any).__heic2any__worker as Worker;
+		worker.postMessage(message);
+		const listener = (message: MessageEvent<any>) => {
+			if (message.data.id === id) {
+				worker.removeEventListener("message", listener);
+				if (message.data.error)
+					reject(message.data.error);
+				else
+					resolve(message.data.imageDataArr);
 			}
-		);
+		};
+		worker.addEventListener("message", listener);
 	});
 }
 
