@@ -194,15 +194,36 @@ const utils = {
 	},
 };
 
+function getWorker(): Worker {
+	if (!(window as any).__heic2any__worker)
+		(window as any).__heic2any__worker = new Worker((window as any).__heic2any__blob_url);
+	return (window as any).__heic2any__worker;
+}
+
+let pendingWorkerJobsCount = 0;
+
+function scheduleWorkerDestruction() {
+	setTimeout(() => {
+		if ((window as any).__heic2any__worker && pendingWorkerJobsCount == 0) {
+			(window as any).__heic2any__worker.terminate();
+			delete (window as any).__heic2any__worker;
+		}
+	}, 10000);
+}
+
 function decodeBuffer(buffer: ArrayBuffer): Promise<ImageData[]> {
 	return new Promise((resolve, reject) => {
 		const id = (Math.random() * new Date().getTime()).toString();
 		const message = { id, buffer };
-		const worker = (window as any).__heic2any__worker as Worker;
+		const worker = getWorker();
+		pendingWorkerJobsCount++;
 		worker.postMessage(message);
-		const listener = (message: MessageEvent<any>) => {
+		const listener = (message: MessageEvent) => {
 			if (message.data.id === id) {
 				worker.removeEventListener("message", listener);
+				pendingWorkerJobsCount--;
+				if (pendingWorkerJobsCount == 0)
+					scheduleWorkerDestruction();
 				if (message.data.error)
 					reject(message.data.error);
 				else

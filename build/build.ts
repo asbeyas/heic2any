@@ -45,7 +45,9 @@ async function startBuild() {
 	).replace(
 		/(\\)/g,
 		"\\\\"
-	)}\n${worker}\n\`;\nvar blob = new Blob([workerString], {type: 'application/javascript'});\nwindow.__heic2any__worker = new Worker(URL.createObjectURL(blob));`;
+	)}\n${worker}\n\`;` +
+		"\nwindow.__heic2any__blob = new Blob([workerString], {type: 'application/javascript'});" +
+		"\nwindow.__heic2any__blob_url = URL.createObjectURL(window.__heic2any__blob);";
 
 	console.log("🔨 📄 Fixing main files");
 	main = worker + main;
