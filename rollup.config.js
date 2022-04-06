@@ -8,7 +8,7 @@ export default {
 		format: "iife",
 		name: "heic2any",
 		banner: () =>
-			readFileSync("./src/libheif.js", { encoding: "utf8" }) + "\n\n",
+			readFileSync("node_modules/libheif-js/libheif/libheif.js", { encoding: "utf8" }) + "\n\n",
 		globals: {
 			"./libheif": "libheif"
 		}

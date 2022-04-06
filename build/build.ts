@@ -33,7 +33,7 @@ async function startBuild() {
 	console.log("🔨 🧱 Compiling from typescript");
 	await execute("tsc --p tsconfig.json && tsc --p ./src/tsconfig.json");
 	console.log("🔨 📄 Reading library files");
-	const libheif = fs.readFileSync("./src/libheif.js", { encoding: "utf8" });
+	const libheif = fs.readFileSync("node_modules/libheif-js/libheif/libheif.js", { encoding: "utf8" });
 	const gifshot = fs.readFileSync("./src/gifshot.js", { encoding: "utf8" });
 	console.log("🔨 📄 Reading main files");
 	let main = fs.readFileSync("./dist/heic2any.js", { encoding: "utf8" });

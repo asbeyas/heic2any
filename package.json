@@ -28,7 +28,9 @@
 		"url": "https://github.com/alexcorvi/heic2any/issues"
 	},
 	"homepage": "https://github.com/alexcorvi/heic2any#readme",
-	"dependencies": {},
+	"dependencies": {
+		"libheif-js": "^1.12.0"
+	},
 	"devDependencies": {
 		"@types/buble": "^0.19.2",
 		"@types/chokidar": "^2.1.3",
