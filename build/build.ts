@@ -5,6 +5,7 @@ import { watch } from "chokidar";
 import * as fs from "fs";
 import * as path from "path";
 import * as uglify from "uglify-js";
+import * as del from "del";
 
 let currentlyBuilding = false;
 let watching = process.argv.indexOf("-w") !== -1;
@@ -29,7 +30,7 @@ function execute(cmd: string) {
 async function startBuild() {
 	console.log("🔨 🔨 Starting a new build");
 	console.log("🔨 🏁 Cleaning dist directory");
-	await execute("rm -rf ./dist");
+	await del(["./dist/"]);
 	console.log("🔨 🧱 Compiling from typescript");
 	await execute("tsc --p tsconfig.json && tsc --p ./src/tsconfig.json");
 	console.log("🔨 📄 Reading library files");
@@ -72,8 +73,7 @@ async function startBuild() {
 		fs.writeFileSync("./dist/heic2any.min.js", libMin);
 	}
 	console.log("🔨 📄 Removing extra files");
-	await execute("rm ./dist/worker.d.ts -f");
-	await execute("rm ./dist/worker.js -f");
+	await del(["./dist/worker.d.ts", "./dist/worker.js"]);
 	console.log("🔨 🏁 Build finished successfully");
 }
 
