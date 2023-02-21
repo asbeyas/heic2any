@@ -1382,9 +1382,9 @@ lcid@^1.0.0:
     invert-kv "^1.0.0"
 
 libheif-js@^1.12.0:
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/libheif-js/-/libheif-js-1.14.0.tgz#488a0037f296ffd389782195dc1c5eab989479ae"
-  integrity sha512-BhVY8TXRs9ozs9AKEe7AALaOb4fWtkoK+wur25BU5HzWVaxmbHGSCxrFbtngpodfjJRPrlPfE7tZ/b37vYeTSQ==
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/libheif-js/-/libheif-js-1.15.1.tgz#4693d664c2c512c6d907153c7ec4e320625470ad"
+  integrity sha512-1nIVY1IFYLglxHPuLMqMBpjx4wigEEUVnSj2d3pRzeOjzKetwXlVejHJJgomZwEARu0PZ3HeGOW7ID/hZr13cg==
 
 limiter@^1.0.5:
   version "1.1.5"
